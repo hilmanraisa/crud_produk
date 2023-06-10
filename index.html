@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daftar Produk</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Daftar Produk</h1>
+  <table id="product-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Harga</th>
+        <th>Deskripsi</th>
+        <th>gambar</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:3000/products')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector('#product-table tbody');
+        data.forEach(product => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${product.id}</td>
+            <td>${product.name}</td>
+            <td>${product.price}</td>
+            <td>${product.description}</td>
+            <td><img src="${product.image}"></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
